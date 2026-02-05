@@ -190,7 +190,7 @@ export const Auth = () => {
                     </button>
                 </form>
 
-                <div className="mt-8 text-center space-y-3">
+                <div className="mt-8 text-center space-y-4">
                     {isForgotPassword ? (
                         <button
                             onClick={() => {
@@ -198,33 +198,34 @@ export const Auth = () => {
                                 setIsLogin(true);
                                 setError(null);
                             }}
-                            className="text-white/40 hover:text-white transition-colors text-sm block w-full"
+                            className="text-white/40 hover:text-white transition-colors text-sm hover:underline"
                         >
                             {t('auth.backToSignIn')}
                         </button>
                     ) : (
-                        <>
+                        <div className="flex flex-col gap-2">
+                            <button
+                                onClick={() => {
+                                    setIsLogin(!isLogin);
+                                    setError(null);
+                                }}
+                                className="text-white/40 hover:text-white transition-colors text-sm hover:underline"
+                            >
+                                {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
+                            </button>
+
                             {isLogin && (
                                 <button
                                     onClick={() => {
                                         setIsForgotPassword(true);
                                         setError(null);
                                     }}
-                                    className="text-white/40 hover:text-white transition-colors text-sm block w-full"
+                                    className="text-xs text-indigo-300/80 hover:text-indigo-300 transition-colors hover:underline"
                                 >
                                     {t('auth.forgotPassword')}
                                 </button>
                             )}
-                            <button
-                                onClick={() => {
-                                    setIsLogin(!isLogin);
-                                    setError(null);
-                                }}
-                                className="text-white/40 hover:text-white transition-colors text-sm block w-full"
-                            >
-                                {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
-                            </button>
-                        </>
+                        </div>
                     )}
                 </div>
             </motion.div>

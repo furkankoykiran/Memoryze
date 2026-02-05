@@ -66,6 +66,15 @@ This project is configured for **GitHub Pages**.
 - The `deploy.yml` workflow automatically builds and deploys changes from the `main` branch.
 - It handles SPA routing by generating a `404.html` and setting the correct `basename`.
 
+## ⚠️ Known Issues & Troubleshooting
+
+### Supabase Rate Limits (`over_email_send_rate_limit`)
+Supabase's free tier has strict limits on email sending (approx. 3-4 emails per hour). If you encounter this error during development:
+1.  Go to your **Supabase Dashboard**.
+2.  Navigate to **Authentication > Providers > Email**.
+3.  **Disable** "Confirm email" (Confirm email addresses).
+4.  This allows users to sign up **without** sending an email, bypassing the rate limit and immediately logging them in.
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
