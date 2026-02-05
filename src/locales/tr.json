@@ -23,7 +23,10 @@
         "updatePassword": "Şifreyi Güncelle",
         "enterNewPassword": "Hesabını güvene almak için yeni şifreni aşağıya gir.",
         "minChars": "En az 6 karakter",
-        "updateSuccess": "Şifre başarıyla güncellendi!"
+        "updateSuccess": "Şifre başarıyla güncellendi!",
+        "errorInvalidLogin": "Geçersiz giriş bilgileri. Lütfen e-posta ve şifrenizi kontrol edin.",
+        "errorRateLimit": "Çok fazla istek gönderildi. Lütfen bir süre bekleyip tekrar deneyin.",
+        "errorUnexpected": "Beklenmeyen bir hata oluştu."
     },
     "dashboard": {
         "totalClusters": "Toplam Küme",

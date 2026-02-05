@@ -68,9 +68,16 @@ export const Auth = () => {
             }
         } catch (err: unknown) {
             if (err instanceof Error) {
-                setError(err.message);
+                // Map Supabase errors to translation keys
+                if (err.message === 'Invalid login credentials') {
+                    setError(t('auth.errorInvalidLogin'));
+                } else if (err.message.includes('rate limit') || err.message.includes('Too many requests')) {
+                    setError(t('auth.errorRateLimit'));
+                } else {
+                    setError(err.message);
+                }
             } else {
-                setError('An unexpected error occurred');
+                setError(t('auth.errorUnexpected'));
             }
         } finally {
             setLoading(false);

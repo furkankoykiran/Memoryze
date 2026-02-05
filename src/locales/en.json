@@ -23,7 +23,10 @@
         "updatePassword": "Update Password",
         "enterNewPassword": "Enter your new password below to secure your account.",
         "minChars": "Min 6 characters",
-        "updateSuccess": "Password updated successfully!"
+        "updateSuccess": "Password updated successfully!",
+        "errorInvalidLogin": "Invalid login credentials. Please check your email and password.",
+        "errorRateLimit": "Too many requests. Please wait a moment and try again.",
+        "errorUnexpected": "An unexpected error occurred."
     },
     "dashboard": {
         "totalClusters": "Total Clusters",
