@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-import { motion, useMotionValue, useTransform, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 import { calculateSM2 } from '../lib/sm2';
 import { useTranslation } from 'react-i18next';
@@ -29,25 +29,9 @@ export const Review = () => {
   const [sessionComplete, setSessionComplete] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
 
-  // Animation controls
-  const controls = useAnimation();
-  const rotateY = useMotionValue(0);
-  // Interpolate opacity based on rotation angle to ensure clean swap
-  // Front is visible from 0 to 90deg. Back is visible from 90 to 180deg.
-  const frontOpacity = useTransform(rotateY, [89, 90], [1, 0]);
-  const backOpacity = useTransform(rotateY, [89, 90], [0, 1]);
-
   useEffect(() => {
     if (id && user) fetchReviews();
   }, [id, user]);
-
-  useEffect(() => {
-    // Animate rotation based on flip state
-    controls.start({
-      rotateY: isFlipped ? 180 : 0,
-      transition: { duration: 0.6, type: "spring", stiffness: 260, damping: 20 }
-    });
-  }, [isFlipped, controls]);
 
   const fetchReviews = async () => {
     try {
@@ -172,49 +156,43 @@ export const Review = () => {
         <div className="w-6" />
       </div>
 
-      <div className="flex-1 flex flex-col justify-center relative perspective-1000">
+      {/* 3D Flip Container */}
+      <div className="flex-1 flex flex-col justify-center relative w-full max-w-2xl mx-auto" style={{ perspective: "1000px" }}>
         <motion.div
-          className="glass-panel min-h-[350px] relative z-10 cursor-pointer shadow-2xl"
+          className="relative w-full min-h-[350px] cursor-pointer z-10"
           onClick={() => !isFlipped && setIsFlipped(true)}
-          initial={{ rotateY: 0 }}
-          animate={controls}
-          style={{
-            transformStyle: "preserve-3d",
-            rotateY: rotateY
-          }}
+          initial={false}
+          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
+          style={{ transformStyle: "preserve-3d" }}
         >
           {/* FRONT FACE (Question) */}
-          <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center"
+          <div
+            className="glass-panel absolute inset-0 flex flex-col items-center justify-center p-10 text-center"
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
+              // Force background to be opaque enough to hide the back face
               backgroundColor: 'rgba(30, 41, 59, 0.95)',
-              borderRadius: '1.5rem',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              opacity: frontOpacity
             }}
           >
             <span className="text-xs text-indigo-300 font-bold uppercase tracking-wider mb-4 block">{t('deck.review.question')}</span>
-            <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.front}</h3>
-          </motion.div>
+            <h3 className="text-2xl font-medium leading-relaxed text-white select-none">{currentCard.front}</h3>
+          </div>
 
           {/* BACK FACE (Answer) */}
-          <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center"
+          <div
+            className="glass-panel absolute inset-0 flex flex-col items-center justify-center p-10 text-center"
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)',
               backgroundColor: 'rgba(30, 41, 59, 0.95)',
-              borderRadius: '1.5rem',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              opacity: backOpacity
             }}
           >
             <span className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-4 block">{t('deck.review.answer')}</span>
-            <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.back}</h3>
-          </motion.div>
+            <h3 className="text-2xl font-medium leading-relaxed text-white select-none">{currentCard.back}</h3>
+          </div>
         </motion.div>
 
         <div className="mt-8 text-center h-24">
