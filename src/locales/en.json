@@ -47,6 +47,29 @@
         "cancel": "Cancel",
         "add": "Add Memo"
     },
+    "landing": {
+        "heroTitle": "Master Your Knowledge with Memoryze",
+        "heroSubtitle": "The ultimate spaced repetition tool to help you sync, retain, and optimize your learning journey.",
+        "getStarted": "Get Started",
+        "login": "Login",
+        "features": {
+            "sync": {
+                "title": "Smart Sync",
+                "desc": "Optimize your review schedule using advanced algorithms."
+            },
+            "clusters": {
+                "title": "Organized Clusters",
+                "desc": "Group your memos into logical clusters for better focus."
+            },
+            "memos": {
+                "title": "Memos",
+                "desc": "Create atomic units of knowledge for efficient recall."
+            }
+        },
+        "footer": {
+            "rights": "© 2024 Memoryze. All rights reserved."
+        }
+    },
     "nav": {
         "dashboard": "Dashboard",
         "signOut": "Sign Out"

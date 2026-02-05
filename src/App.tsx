@@ -5,6 +5,7 @@ import { Auth } from './pages/Auth';
 import { Dashboard } from './pages/Dashboard';
 import { DeckDetail } from './pages/DeckDetail';
 import { Review } from './pages/Review';
+import { Landing } from './pages/Landing';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -26,7 +27,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   if (loading) return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
 
   if (session) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <>{children}</>;
@@ -37,13 +38,18 @@ function App() {
     <AuthProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
+          {/* Landing Page (Public) */}
+          <Route path="/" element={<Landing />} />
+
+          {/* Auth Page (Public - Restricted if logged in) */}
           <Route path="/auth" element={
             <PublicRoute>
               <Auth />
             </PublicRoute>
           } />
 
-          <Route path="/" element={
+          {/* Protected Routes */}
+          <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>

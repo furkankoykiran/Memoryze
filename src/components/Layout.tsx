@@ -13,7 +13,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     const location = useLocation();
 
     const navItems = [
-        { icon: LayoutDashboard, label: t('nav.dashboard'), path: '/' },
+        { icon: LayoutDashboard, label: t('nav.dashboard'), path: '/dashboard' },
     ];
 
     const toggleLanguage = () => {

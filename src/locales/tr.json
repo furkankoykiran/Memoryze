@@ -47,6 +47,29 @@
         "cancel": "İptal",
         "add": "Ekle"
     },
+    "landing": {
+        "heroTitle": "Memoryze ile Bilgini Yönet",
+        "heroSubtitle": "Öğrenme yolculuğunu senkronize et, koru ve optimize etmen için geliştirilmiş en iyi aralıklı tekrar aracı.",
+        "getStarted": "Hemen Başla",
+        "login": "Giriş Yap",
+        "features": {
+            "sync": {
+                "title": "Akıllı Senkronizasyon",
+                "desc": "Gelişmiş algoritmalarla tekrar programını optimize et."
+            },
+            "clusters": {
+                "title": "Düzenli Kümeler",
+                "desc": "Daha iyi odaklanmak için memolarını kümeler halinde grupla."
+            },
+            "memos": {
+                "title": "Memolar",
+                "desc": "Verimli hatırlama için atomik bilgi birimleri oluştur."
+            }
+        },
+        "footer": {
+            "rights": "© 2024 Memoryze. Tüm hakları saklıdır."
+        }
+    },
     "nav": {
         "dashboard": "Panel",
         "signOut": "Çıkış Yap"
