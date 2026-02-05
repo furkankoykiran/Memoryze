@@ -71,7 +71,11 @@ export const Auth = () => {
                 // Map Supabase errors to translation keys
                 if (err.message === 'Invalid login credentials') {
                     setError(t('auth.errorInvalidLogin'));
-                } else if (err.message.includes('rate limit') || err.message.includes('Too many requests')) {
+                } else if (
+                    err.message.includes('rate limit') ||
+                    err.message.includes('Too many requests') ||
+                    err.message.includes('over_email_send_rate_limit')
+                ) {
                     setError(t('auth.errorRateLimit'));
                 } else {
                     setError(err.message);
@@ -155,18 +159,6 @@ export const Auth = () => {
                         <div className="space-y-1">
                             <div className="flex justify-between items-center ml-1">
                                 <label className="text-sm font-medium text-white/80">{t('auth.password')}</label>
-                                {isLogin && (
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setIsForgotPassword(true);
-                                            setError(null);
-                                        }}
-                                        className="text-xs text-indigo-300 hover:text-indigo-200"
-                                    >
-                                        {t('auth.forgotPassword')}
-                                    </button>
-                                )}
                             </div>
                             <div className="relative group">
                                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-indigo-400 transition-colors" size={20} />
@@ -198,7 +190,7 @@ export const Auth = () => {
                     </button>
                 </form>
 
-                <div className="mt-8 text-center space-y-2">
+                <div className="mt-8 text-center space-y-3">
                     {isForgotPassword ? (
                         <button
                             onClick={() => {
@@ -206,20 +198,33 @@ export const Auth = () => {
                                 setIsLogin(true);
                                 setError(null);
                             }}
-                            className="text-white/40 hover:text-white transition-colors text-sm"
+                            className="text-white/40 hover:text-white transition-colors text-sm block w-full"
                         >
                             {t('auth.backToSignIn')}
                         </button>
                     ) : (
-                        <button
-                            onClick={() => {
-                                setIsLogin(!isLogin);
-                                setError(null);
-                            }}
-                            className="text-white/40 hover:text-white transition-colors text-sm"
-                        >
-                            {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
-                        </button>
+                        <>
+                            {isLogin && (
+                                <button
+                                    onClick={() => {
+                                        setIsForgotPassword(true);
+                                        setError(null);
+                                    }}
+                                    className="text-white/40 hover:text-white transition-colors text-sm block w-full"
+                                >
+                                    {t('auth.forgotPassword')}
+                                </button>
+                            )}
+                            <button
+                                onClick={() => {
+                                    setIsLogin(!isLogin);
+                                    setError(null);
+                                }}
+                                className="text-white/40 hover:text-white transition-colors text-sm block w-full"
+                            >
+                                {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
+                            </button>
+                        </>
                     )}
                 </div>
             </motion.div>
