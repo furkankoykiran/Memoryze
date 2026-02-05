@@ -172,7 +172,7 @@ export const Review = () => {
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
-              // Force background to be opaque enough to hide the back face
+              zIndex: isFlipped ? 0 : 1,
               backgroundColor: 'rgba(30, 41, 59, 0.95)',
             }}
           >
@@ -186,6 +186,7 @@ export const Review = () => {
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
+              zIndex: isFlipped ? 1 : 0,
               transform: 'rotateY(180deg)',
               backgroundColor: 'rgba(30, 41, 59, 0.95)',
             }}
