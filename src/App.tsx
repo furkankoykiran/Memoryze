@@ -31,6 +31,18 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <Layout>{children}</Layout>;
 };
 
+const ProtectedStandaloneRoute = ({ children }: { children: React.ReactNode }) => {
+  const { session, loading } = useAuth();
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
+
+  if (!session) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col pt-20">
@@ -79,9 +91,9 @@ function App() {
 
           {/* Update Password - Protected because reset link logs them in */}
           <Route path="/update-password" element={
-            <ProtectedRoute>
+            <ProtectedStandaloneRoute>
               <UpdatePassword />
-            </ProtectedRoute>
+            </ProtectedStandaloneRoute>
           } />
 
           <Route path="/deck/:id" element={

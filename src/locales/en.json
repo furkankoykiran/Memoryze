@@ -31,7 +31,14 @@
         "clusterTitlePlaceholder": "e.g., Biology 101",
         "clusterDescPlaceholder": "What is this cluster about?",
         "cancel": "Cancel",
-        "create": "Create"
+        "create": "Create",
+        "addMemo": "Add Memo",
+        "question": "Question (Front)",
+        "answer": "Answer (Back)",
+        "enterQuestion": "Enter your question...",
+        "enterAnswer": "Enter your answer...",
+        "saveMemo": "Save Memo",
+        "save": "Save"
     },
     "deck": {
         "backToDashboard": "Back to Dashboard",

@@ -31,7 +31,14 @@
         "clusterTitlePlaceholder": "ör., İngilizce Kelimeler",
         "clusterDescPlaceholder": "Bu küme ne hakkında?",
         "cancel": "İptal",
-        "create": "Oluştur"
+        "create": "Oluştur",
+        "addMemo": "Memo Ekle",
+        "question": "Soru (Ön Yüz)",
+        "answer": "Cevap (Arka Yüz)",
+        "enterQuestion": "Sorunuzu buraya girin...",
+        "enterAnswer": "Cevabı buraya girin...",
+        "saveMemo": "Memoyu Kaydet",
+        "save": "Kaydet"
     },
     "deck": {
         "backToDashboard": "Panele Dön",
