@@ -41,7 +41,7 @@ export const Header = () => {
         <header className="fixed top-0 left-0 right-0 z-50 glass-panel rounded-none border-t-0 border-x-0 border-b border-white/10 px-6 py-4">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 <Link to="/" className="flex items-center gap-2 group">
-                    <img src="/logo.png" alt="Memoryze Logo" className="w-10 h-10 group-hover:scale-105 transition-transform" />
+                    <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Memoryze Logo" className="w-10 h-10 group-hover:scale-105 transition-transform" />
                     <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
                         Memoryze
                     </span>

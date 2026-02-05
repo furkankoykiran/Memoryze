@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
     const { t, i18n } = useTranslation();
-    const { signOut, user } = useAuth();
+    const { signOut, user, profile } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
 
@@ -49,7 +49,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 )}
             >
                 <div className="flex items-center gap-3 mb-10">
-                    <img src="/logo.png" alt="Memoryze" className="w-10 h-10" />
+                    <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Memoryze" className="w-10 h-10" />
                     <div>
                         <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
                             {t('app.title')}
@@ -89,10 +89,12 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                     {/* User Profile */}
                     <div className="flex items-center gap-3 px-2">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center text-xs font-bold border border-white/20">
-                            {user?.email?.[0].toUpperCase()}
+                            {(profile?.first_name?.[0] || user?.email?.[0] || '?').toUpperCase()}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium truncate text-white/90">{user?.email}</p>
+                            <p className="text-sm font-medium truncate text-white/90">
+                                {profile?.first_name ? `${profile.first_name} ${profile.last_name}` : user?.email}
+                            </p>
                         </div>
                     </div>
 

@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 // Optional: Attempt to create profile if missing (Self-healing)
                 // const { data: newProfile, error: createError } = await supabase.from('profiles').insert([{ id: userId }]).select().single();
                 // if (newProfile) setProfile(newProfile);
-                console.warn("Profile not found for user:", userId);
+                // console.warn("Profile not found for user:", userId);
             }
 
         } catch (error) {

@@ -14,9 +14,10 @@ Memoryze is a modern, spaced-repetition based learning application designed to h
 
 ## 🚀 Features
 
-- **Smart Sync**: Uses advanced spaced repetition algorithms (based on SuperMemo 2) to schedule reviews at the perfect time.
+- **Smart Scheduling**: Uses advanced spaced repetition algorithms (based on SuperMemo 2) to schedule reviews at the perfect time.
 - **Clusters & Memos**: Organize your knowledge into **Clusters** (Topics) and atomic **Memos** (Flashcards).
 - **Multi-Language Support**: Fully localized in **English** and **Turkish**. Auto-detects your browser preference.
+- **Modern Dashboard**: Manage your clusters, add new memos easily, and track your progress.
 - **Modern UI/UX**: Features a sleek, dark-themed glassmorphism interface powered by Tailwind CSS and Framer Motion.
 - **Secure Authentication**: Robust user management via Supabase Auth.
 

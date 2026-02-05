@@ -22,6 +22,41 @@ export const Dashboard = () => {
     const [showNewClusterModal, setShowNewClusterModal] = useState(false);
     const [newClusterTitle, setNewClusterTitle] = useState('');
     const [newClusterDesc, setNewClusterDesc] = useState('');
+    const [showNewMemoModal, setShowNewMemoModal] = useState(false);
+    const [selectedClusterId, setSelectedClusterId] = useState<string | null>(null);
+    const [newMemoQuestion, setNewMemoQuestion] = useState('');
+    const [newMemoAnswer, setNewMemoAnswer] = useState('');
+
+    const openNewMemoModal = (clusterId: string) => {
+        setSelectedClusterId(clusterId);
+        setShowNewMemoModal(true);
+    };
+
+    const handleCreateMemo = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!selectedClusterId || !newMemoQuestion.trim() || !newMemoAnswer.trim() || !user) return;
+
+        try {
+            const { error } = await supabase
+                .from('cards')
+                .insert({
+                    deck_id: selectedClusterId,
+                    user_id: user.id,
+                    question: newMemoQuestion,
+                    answer: newMemoAnswer
+                });
+
+            if (error) throw error;
+
+            setNewMemoQuestion('');
+            setNewMemoAnswer('');
+            setShowNewMemoModal(false);
+            // Refresh to update counts
+            fetchClusters();
+        } catch (error) {
+            console.error('Error creating memo:', error);
+        }
+    };
 
     const fetchClusters = async () => {
         if (!user) return;
@@ -127,9 +162,21 @@ export const Dashboard = () => {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: i * 0.05 }}
-                            className="glass-panel p-6 hover:bg-white/10 transition-colors group relative"
+                            className="glass-panel p-6 hover:bg-white/10 transition-colors group relative flex flex-col"
                         >
-                            <h3 className="text-xl font-bold mb-2">{cluster.title}</h3>
+                            <div className="flex justify-between items-start mb-2">
+                                <h3 className="text-xl font-bold">{cluster.title}</h3>
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        openNewMemoModal(cluster.id);
+                                    }}
+                                    className="p-1.5 rounded-lg bg-white/5 hover:bg-white/20 text-white/70 hover:text-white transition-colors"
+                                    title={t('dashboard.addMemo', { defaultValue: 'Add Memo' })}
+                                >
+                                    <Plus size={16} />
+                                </button>
+                            </div>
                             <p className="text-white/60 text-sm mb-4 line-clamp-2">{cluster.description || 'No description'}</p>
 
                             <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
@@ -189,6 +236,57 @@ export const Dashboard = () => {
                                     className="btn-primary"
                                 >
                                     {t('dashboard.create')}
+                                </button>
+                            </div>
+                        </form>
+                    </motion.div>
+                </div>
+            )}
+
+            {/* New Memo Modal */}
+            {showNewMemoModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="glass-panel w-full max-w-lg p-6"
+                    >
+                        <h2 className="text-xl font-bold mb-4">{t('dashboard.addMemo', { defaultValue: 'Add New Memo' })}</h2>
+                        <form onSubmit={handleCreateMemo} className="space-y-4">
+                            <div>
+                                <label className="block text-sm text-white/70 mb-1">{t('dashboard.question', { defaultValue: 'Question' })}</label>
+                                <textarea
+                                    autoFocus
+                                    required
+                                    value={newMemoQuestion}
+                                    onChange={e => setNewMemoQuestion(e.target.value)}
+                                    className="glass-input w-full h-24 resize-none"
+                                    placeholder={t('dashboard.enterQuestion', { defaultValue: 'Enter your question or front side...' })}
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm text-white/70 mb-1">{t('dashboard.answer', { defaultValue: 'Answer' })}</label>
+                                <textarea
+                                    required
+                                    value={newMemoAnswer}
+                                    onChange={e => setNewMemoAnswer(e.target.value)}
+                                    className="glass-input w-full h-24 resize-none"
+                                    placeholder={t('dashboard.enterAnswer', { defaultValue: 'Enter the answer or back side...' })}
+                                />
+                            </div>
+                            <div className="flex gap-3 justify-end pt-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowNewMemoModal(false)}
+                                    className="px-4 py-2 hover:bg-white/10 rounded-lg transition-colors"
+                                >
+                                    {t('dashboard.cancel')}
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn-primary"
+                                >
+                                    {t('dashboard.saveMemo', { defaultValue: 'Save Memo' })}
                                 </button>
                             </div>
                         </form>

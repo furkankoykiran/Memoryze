@@ -8,6 +8,7 @@ import { Review } from './pages/Review';
 import { Landing } from './pages/Landing';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { UpdatePassword } from './pages/UpdatePassword';
 
 // Layout Wrapper for Pages that need Header/Footer
 // Although Landing uses them directly, other protected pages use Layout
@@ -73,6 +74,13 @@ function App() {
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          } />
+
+          {/* Update Password - Protected because reset link logs them in */}
+          <Route path="/update-password" element={
+            <ProtectedRoute>
+              <UpdatePassword />
             </ProtectedRoute>
           } />
 

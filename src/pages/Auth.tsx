@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 export const Auth = () => {
     const { t } = useTranslation();
     const [isLogin, setIsLogin] = useState(true);
+    const [isForgotPassword, setIsForgotPassword] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -22,7 +23,15 @@ export const Auth = () => {
         setError(null);
 
         try {
-            if (isLogin) {
+            if (isForgotPassword) {
+                const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.origin + import.meta.env.BASE_URL + 'update-password',
+                });
+                if (error) throw error;
+                alert('Password reset link sent to your email!');
+                setIsForgotPassword(false);
+                setIsLogin(true);
+            } else if (isLogin) {
                 const { error } = await supabase.auth.signInWithPassword({
                     email,
                     password,
@@ -83,7 +92,7 @@ export const Auth = () => {
                         {t('app.title')}
                     </h1>
                     <p className="text-white/60 mt-2">
-                        {isLogin ? t('auth.welcomeBack') : t('auth.welcomeJoin')}
+                        {isForgotPassword ? 'Reset Password' : isLogin ? t('auth.welcomeBack') : t('auth.welcomeJoin')}
                     </p>
                 </div>
 
@@ -94,7 +103,7 @@ export const Auth = () => {
                 )}
 
                 <form onSubmit={handleAuth} className="space-y-5">
-                    {!isLogin && (
+                    {!isLogin && !isForgotPassword && (
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1">
                                 <label className="text-sm font-medium text-white/80 ml-1">{t('profile.firstName')}</label>
@@ -135,20 +144,36 @@ export const Auth = () => {
                         </div>
                     </div>
 
-                    <div className="space-y-1">
-                        <label className="text-sm font-medium text-white/80 ml-1">{t('auth.password')}</label>
-                        <div className="relative group">
-                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-indigo-400 transition-colors" size={20} />
-                            <input
-                                type="password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-10 py-3 outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all text-white placeholder-white/20"
-                                placeholder="••••••••"
-                            />
+                    {!isForgotPassword && (
+                        <div className="space-y-1">
+                            <div className="flex justify-between items-center ml-1">
+                                <label className="text-sm font-medium text-white/80">{t('auth.password')}</label>
+                                {isLogin && (
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setIsForgotPassword(true);
+                                            setError(null);
+                                        }}
+                                        className="text-xs text-indigo-300 hover:text-indigo-200"
+                                    >
+                                        Forgot Password?
+                                    </button>
+                                )}
+                            </div>
+                            <div className="relative group">
+                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-indigo-400 transition-colors" size={20} />
+                                <input
+                                    type="password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-10 py-3 outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all text-white placeholder-white/20"
+                                    placeholder="••••••••"
+                                />
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     <button
                         type="submit"
@@ -159,20 +184,36 @@ export const Auth = () => {
                             <Loader2 className="animate-spin" size={20} />
                         ) : (
                             <>
-                                {isLogin ? t('auth.signIn') : t('auth.signUp')}
+                                {isForgotPassword ? 'Send Reset Link' : isLogin ? t('auth.signIn') : t('auth.signUp')}
                                 <ArrowRight size={18} />
                             </>
                         )}
                     </button>
                 </form>
 
-                <div className="mt-8 text-center">
-                    <button
-                        onClick={() => setIsLogin(!isLogin)}
-                        className="text-white/40 hover:text-white transition-colors text-sm"
-                    >
-                        {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
-                    </button>
+                <div className="mt-8 text-center space-y-2">
+                    {isForgotPassword ? (
+                        <button
+                            onClick={() => {
+                                setIsForgotPassword(false);
+                                setIsLogin(true);
+                                setError(null);
+                            }}
+                            className="text-white/40 hover:text-white transition-colors text-sm"
+                        >
+                            Back to Sign In
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => {
+                                setIsLogin(!isLogin);
+                                setError(null);
+                            }}
+                            className="text-white/40 hover:text-white transition-colors text-sm"
+                        >
+                            {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
+                        </button>
+                    )}
                 </div>
             </motion.div>
         </div>
