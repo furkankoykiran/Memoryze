@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+# Memoryze 🧠
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Sync your knowledge, retain your future.**
 
-Currently, two official plugins are available:
+Memoryze is a modern, spaced-repetition based learning application designed to help you optimize your study sessions and maximize retention. Built with a focus on simplicity, performance, and user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-18-blue)
+![Vite](https://img.shields.io/badge/Vite-5-purple)
+![Tailwind](https://img.shields.io/badge/Tailwind-3-cyan)
+![Supabase](https://img.shields.io/badge/Supabase-Auth%20%26%20DB-green)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- **Smart Sync**: Uses advanced spaced repetition algorithms (based on SuperMemo 2) to schedule reviews at the perfect time.
+- **Clusters & Memos**: Organize your knowledge into **Clusters** (Topics) and atomic **Memos** (Flashcards).
+- **Multi-Language Support**: Fully localized in **English** and **Turkish**. Auto-detects your browser preference.
+- **Modern UI/UX**: Features a sleek, dark-themed glassmorphism interface powered by Tailwind CSS and Framer Motion.
+- **Secure Authentication**: Robust user management via Supabase Auth.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠 Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Frontend Framework**: [React](https://reactjs.org/) with [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Backend & Auth**: [Supabase](https://supabase.com/)
+- **Internationalization**: [i18next](https://www.i18next.com/)
+- **Routing**: [React Router](https://reactrouter.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📦 Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+To run Memoryze locally, follow these steps:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/furkankoykiran/Memoryze.git
+    cd Memoryze
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3.  **Environment Setup**
+    Create a `.env` file in the root directory (optional if relying on hardcoded anon keys for dev, but recommended):
+    ```env
+    VITE_SUPABASE_URL=your_supabase_url
+    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
+
+4.  **Run Development Server**
+    ```bash
+    npm run dev
+    ```
+
+## 🌍 Deployment
+
+This project is configured for **GitHub Pages**.
+
+- The `deploy.yml` workflow automatically builds and deploys changes from the `main` branch.
+- It handles SPA routing by generating a `404.html` and setting the correct `basename`.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+*Memoryze © 2024*
