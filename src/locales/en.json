@@ -67,7 +67,30 @@
         "deleteConfirm": "Are you sure you want to delete this memo?",
         "addMemoTitle": "Add New Memo",
         "cancel": "Cancel",
-        "add": "Add Memo"
+        "add": "Add Memo""cancel": "Cancel",
+        "add": "Add Memo",
+        "review": {
+            "allCaughtUp": "All Caught Up!",
+            "noCardsDue": "No cards due for review in this deck right now.",
+            "backToDashboard": "Back to Dashboard",
+            "sessionComplete": "Session Complete!",
+            "reviewedCards": "You've reviewed {{count}} cards.",
+            "tapToFlip": "Tap card to see answer",
+            "question": "Question",
+            "answer": "Answer",
+            "difficulty": {
+                "again": "Again",
+                "hard": "Hard",
+                "good": "Good",
+                "easy": "Easy"
+            },
+            "sub": {
+                "cannot": "Forgot",
+                "struggled": "Struggled",
+                "recall": "Recalled",
+                "perfect": "Perfect"
+            }
+        }
     },
     "landing": {
         "heroTitle": "Master Your Knowledge with Memoryze",

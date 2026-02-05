@@ -67,7 +67,29 @@
         "deleteConfirm": "Bu memoyu silmek istediğinize emin misiniz?",
         "addMemoTitle": "Yeni Memo Ekle",
         "cancel": "İptal",
-        "add": "Ekle"
+        "add": "Ekle",
+        "review": {
+            "allCaughtUp": "Her Şey Tamam!",
+            "noCardsDue": "Şu an bu destede çalışılacak kart yok.",
+            "backToDashboard": "Panele Dön",
+            "sessionComplete": "Oturum Tamamlandı!",
+            "reviewedCards": "{{count}} kart çalıştın.",
+            "tapToFlip": "Cevabı görmek için karta dokun",
+            "question": "Soru",
+            "answer": "Cevap",
+            "difficulty": {
+                "again": "Tekrar",
+                "hard": "Zor",
+                "good": "İyi",
+                "easy": "Kolay"
+            },
+            "sub": {
+                "cannot": "Unuttum",
+                "struggled": "Zorlandım",
+                "recall": "Hatırladım",
+                "perfect": "Mükemmel"
+            }
+        }
     },
     "landing": {
         "heroTitle": "Memoryze ile Bilgini Yönet",
