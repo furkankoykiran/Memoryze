@@ -74,6 +74,7 @@
             "backToDashboard": "Back to Dashboard",
             "sessionComplete": "Session Complete!",
             "reviewedCards": "You've reviewed {{count}} cards.",
+            "progress": "Card {{current}} / {{total}}",
             "tapToFlip": "Tap card to see answer",
             "question": "Question",
             "answer": "Answer",

@@ -74,6 +74,7 @@
             "backToDashboard": "Panele Dön",
             "sessionComplete": "Oturum Tamamlandı!",
             "reviewedCards": "{{count}} kart çalıştın.",
+            "progress": "Kart {{current}} / {{total}}",
             "tapToFlip": "Cevabı görmek için karta dokun",
             "question": "Soru",
             "answer": "Cevap",
