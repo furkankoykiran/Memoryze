@@ -56,36 +56,62 @@ export const Review = () => {
   const handleGrade = async (grade: number) => {
     const card = cards[currentCardIndex];
 
-    const result = calculateSM2({
-      q: grade,
-      repetition: card.repetition,
-      ef: card.ease_factor,
-      interval: card.interval
-    });
+    // Only update SM2 algorithm if the grade is passing (Good 4 or Easy 5)
+    // If we fail (Again 0 or Hard 3), we don't save the progress yet, we just repeat it locally.
+    // Or strictly speaking, SM2 handles failures by resetting intervals. 
+    // But for this "Session" logic, the user wants to see it AGAIN in this session until passed.
 
-    // Backend update
-    supabase.from('cards').update({
-      next_review: result.nextReviewDate.toISOString(),
-      interval: result.interval,
-      repetition: result.repetition,
-      ease_factor: result.ef
-    }).eq('id', card.id).then(({ error }) => {
-      if (error) console.error("Update failed", error);
-    });
+    if (grade >= 4) {
+      // Passing grade: Update DB
+      const result = calculateSM2({
+        q: grade,
+        repetition: card.repetition,
+        ef: card.ease_factor,
+        interval: card.interval
+      });
+
+      // Backend update
+      supabase.from('cards').update({
+        next_review: result.nextReviewDate.toISOString(),
+        interval: result.interval,
+        repetition: result.repetition,
+        ease_factor: result.ef
+      }).eq('id', card.id).then(({ error }) => {
+        if (error) console.error("Update failed", error);
+      });
+
+      setCompletedCount(prev => prev + 1);
+    } else {
+      // Failing grade (Again/Hard):
+      // 1. We should penalize the card in DB immediately (reset interval) so it shows up tomorrow properly?
+      //    Ideally yes, SM2 says if q<3 start over. 
+      //    Let's handle the DB update for failure too, to ensure future scheduling is correct.
+
+      const result = calculateSM2({
+        q: grade,
+        repetition: card.repetition,
+        ef: card.ease_factor,
+        interval: card.interval
+      });
+
+      supabase.from('cards').update({
+        next_review: result.nextReviewDate.toISOString(),
+        interval: result.interval,
+        repetition: result.repetition,
+        ease_factor: result.ef
+      }).eq('id', card.id).then(({ error }) => {
+        if (error) console.error("Update failed", error);
+      });
+
+      // 2. Re-queue for THIS session logic
+      // Push a copy to the end of the list so we see it again
+      setCards(prev => [...prev, card]);
+    }
 
     // Reset flip
     setIsFlipped(false);
 
-    // Logic: If grade is 0 (Again) or 3 (Hard), re-queue the card
-    // Note: We won't count it as a "completed" review for the session progress
-    if (grade < 4) {
-      // Add a copy of the card to the end of the queue to review again in this session
-      setCards(prev => [...prev, card]);
-    } else {
-      // Only count as completed if grade is Good or Easy
-      setCompletedCount(prev => prev + 1);
-    }
-
+    // Move to next card
     const nextIndex = currentCardIndex + 1;
     if (nextIndex >= cards.length) {
       setSessionComplete(true);
@@ -134,7 +160,6 @@ export const Review = () => {
           <ArrowLeft />
         </button>
         <div className="text-white/40 text-sm font-mono">
-          {/* Show progress based on completed vs initial unique cards, or just index */}
           Card {currentCardIndex + 1} / {cards.length}
         </div>
         <div className="w-6" />
@@ -142,38 +167,47 @@ export const Review = () => {
 
       <div className="flex-1 flex flex-col justify-center relative perspective-1000">
         <motion.div
-          className="glass-panel p-10 min-h-[350px] flex flex-col items-center justify-center text-center cursor-pointer shadow-2xl relative z-10"
+          className="glass-panel min-h-[350px] relative z-10 cursor-pointer shadow-2xl"
           onClick={() => !isFlipped && setIsFlipped(true)}
-          initial={false}
+          initial={{ rotateY: 0 }}
           animate={{ rotateY: isFlipped ? 180 : 0 }}
           transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
-          style={{ transformStyle: "preserve-3d" }}
+          style={{
+            transformStyle: "preserve-3d",
+            position: 'relative',
+            width: '100%',
+            height: '100%'
+          }}
         >
-          {/* Front Face */}
-          <div className="absolute inset-0 flex items-center justify-center p-8 transition-opacity duration-300"
-            style={{
-              opacity: isFlipped ? 0 : 1,
-              pointerEvents: isFlipped ? 'none' : 'auto'
-            }}>
-            <div>
-              <span className="text-xs text-indigo-300 font-bold uppercase tracking-wider mb-4 block">{t('deck.review.question')}</span>
-              <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.front}</h3>
-            </div>
-          </div>
-
-          {/* Back Face */}
+          {/* FRONT FACE (Question) */}
           <div
-            className="absolute inset-0 flex items-center justify-center p-8 transition-opacity duration-300"
+            className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center"
             style={{
-              transform: "rotateY(180deg)",
-              opacity: isFlipped ? 1 : 0,
-              pointerEvents: isFlipped ? 'auto' : 'none'
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              backgroundColor: 'rgba(30, 41, 59, 0.95)', // Ensure background is opaque
+              borderRadius: '1.5rem', // Match glass-panel
+              border: '1px solid rgba(255, 255, 255, 0.1)'
             }}
           >
-            <div>
-              <span className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-4 block">{t('deck.review.answer')}</span>
-              <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.back}</h3>
-            </div>
+            <span className="text-xs text-indigo-300 font-bold uppercase tracking-wider mb-4 block">{t('deck.review.question')}</span>
+            <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.front}</h3>
+          </div>
+
+          {/* BACK FACE (Answer) */}
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center"
+            style={{
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              transform: 'rotateY(180deg)',
+              backgroundColor: 'rgba(30, 41, 59, 0.95)',
+              borderRadius: '1.5rem',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            <span className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-4 block">{t('deck.review.answer')}</span>
+            <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.back}</h3>
           </div>
         </motion.div>
 
