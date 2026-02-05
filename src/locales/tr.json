@@ -1,0 +1,38 @@
+{
+    "app": {
+        "title": "Memoryze",
+        "subtitle": "Bize katıl ve bilgini senkronize et",
+        "loading": "Yükleniyor..."
+    },
+    "auth": {
+        "welcomeBack": "Tekrar hoşgeldin! Senkronize olmaya hazır mısın?",
+        "welcomeJoin": "Bize katıl ve kümelerini yönet",
+        "signIn": "Giriş Yap",
+        "signUp": "Hesap Oluştur",
+        "email": "E-posta",
+        "password": "Şifre",
+        "noAccount": "Hesabın yok mu? Kayıt ol",
+        "hasAccount": "Zaten hesabın var mı? Giriş yap",
+        "checkEmail": "Giriş linki için e-postanı kontrol et!"
+    },
+    "dashboard": {
+        "totalClusters": "Toplam Küme",
+        "totalNodes": "Toplam Düğüm",
+        "yourClusters": "Kümelerin",
+        "newCluster": "Yeni Küme",
+        "noClustersTitle": "Henüz küme yok",
+        "noClustersDesc": "Senkronizasyona başlamak için ilk kümeni oluştur!",
+        "createCluster": "Küme Oluştur",
+        "studyNow": "Senkronize Et",
+        "nodesCount": "{{count}} düğüm",
+        "modalTitle": "Yeni Küme Oluştur",
+        "clusterTitle": "Başlık",
+        "clusterDesc": "Açıklama",
+        "cancel": "İptal",
+        "create": "Oluştur"
+    },
+    "nav": {
+        "dashboard": "Panel",
+        "signOut": "Çıkış Yap"
+    }
+}

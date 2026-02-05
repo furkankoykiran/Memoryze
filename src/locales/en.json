@@ -1,0 +1,38 @@
+{
+    "app": {
+        "title": "Memoryze",
+        "subtitle": "Join us and sync your knowledge",
+        "loading": "Loading..."
+    },
+    "auth": {
+        "welcomeBack": "Welcome back! Ready to sync?",
+        "welcomeJoin": "Join us and master your clusters",
+        "signIn": "Sign In",
+        "signUp": "Create Account",
+        "email": "Email",
+        "password": "Password",
+        "noAccount": "Don't have an account? Sign up",
+        "hasAccount": "Already have an account? Sign in",
+        "checkEmail": "Check your email for the login link!"
+    },
+    "dashboard": {
+        "totalClusters": "Total Clusters",
+        "totalNodes": "Total Nodes",
+        "yourClusters": "Your Clusters",
+        "newCluster": "New Cluster",
+        "noClustersTitle": "No clusters yet",
+        "noClustersDesc": "Create your first cluster to start syncing!",
+        "createCluster": "Create Cluster",
+        "studyNow": "Sync Now",
+        "nodesCount": "{{count}} nodes",
+        "modalTitle": "Create New Cluster",
+        "clusterTitle": "Title",
+        "clusterDesc": "Description",
+        "cancel": "Cancel",
+        "create": "Create"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "signOut": "Sign Out"
+    }
+}
