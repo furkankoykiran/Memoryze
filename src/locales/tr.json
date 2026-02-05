@@ -13,7 +13,17 @@
         "password": "Şifre",
         "noAccount": "Hesabın yok mu? Kayıt ol",
         "hasAccount": "Zaten hesabın var mı? Giriş yap",
-        "checkEmail": "Giriş linki için e-postanı kontrol et!"
+        "checkEmail": "Giriş linki için e-postanı kontrol et!",
+        "forgotPassword": "Şifremi Unuttum?",
+        "resetPassword": "Şifre Sıfırla",
+        "sendResetLink": "Sıfırlama Linki Gönder",
+        "backToSignIn": "Giriş Yap'a Dön",
+        "resetLinkSent": "Şifre sıfırlama linki e-postana gönderildi!",
+        "newPassword": "Yeni Şifre",
+        "updatePassword": "Şifreyi Güncelle",
+        "enterNewPassword": "Hesabını güvene almak için yeni şifreni aşağıya gir.",
+        "minChars": "En az 6 karakter",
+        "updateSuccess": "Şifre başarıyla güncellendi!"
     },
     "dashboard": {
         "totalClusters": "Toplam Küme",

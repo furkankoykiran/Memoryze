@@ -41,7 +41,7 @@ export const Dashboard = () => {
                 .from('cards')
                 .insert({
                     deck_id: selectedClusterId,
-                    user_id: user.id,
+                    // user_id inherited from deck or not present in schema
                     front: newMemoQuestion,
                     back: newMemoAnswer,
                     next_review: new Date().toISOString(),

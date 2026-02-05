@@ -28,7 +28,7 @@ export const Auth = () => {
                     redirectTo: window.location.origin + import.meta.env.BASE_URL + 'update-password',
                 });
                 if (error) throw error;
-                alert('Password reset link sent to your email!');
+                alert(t('auth.resetLinkSent'));
                 setIsForgotPassword(false);
                 setIsLogin(true);
             } else if (isLogin) {
@@ -92,7 +92,7 @@ export const Auth = () => {
                         {t('app.title')}
                     </h1>
                     <p className="text-white/60 mt-2">
-                        {isForgotPassword ? 'Reset Password' : isLogin ? t('auth.welcomeBack') : t('auth.welcomeJoin')}
+                        {isForgotPassword ? t('auth.resetPassword') : isLogin ? t('auth.welcomeBack') : t('auth.welcomeJoin')}
                     </p>
                 </div>
 
@@ -157,7 +157,7 @@ export const Auth = () => {
                                         }}
                                         className="text-xs text-indigo-300 hover:text-indigo-200"
                                     >
-                                        Forgot Password?
+                                        {t('auth.forgotPassword')}
                                     </button>
                                 )}
                             </div>
@@ -184,7 +184,7 @@ export const Auth = () => {
                             <Loader2 className="animate-spin" size={20} />
                         ) : (
                             <>
-                                {isForgotPassword ? 'Send Reset Link' : isLogin ? t('auth.signIn') : t('auth.signUp')}
+                                {isForgotPassword ? t('auth.sendResetLink') : isLogin ? t('auth.signIn') : t('auth.signUp')}
                                 <ArrowRight size={18} />
                             </>
                         )}
@@ -201,7 +201,7 @@ export const Auth = () => {
                             }}
                             className="text-white/40 hover:text-white transition-colors text-sm"
                         >
-                            Back to Sign In
+                            {t('auth.backToSignIn')}
                         </button>
                     ) : (
                         <button

@@ -13,7 +13,17 @@
         "password": "Password",
         "noAccount": "Don't have an account? Sign up",
         "hasAccount": "Already have an account? Sign in",
-        "checkEmail": "Check your email for the login link!"
+        "checkEmail": "Check your email for the login link!",
+        "forgotPassword": "Forgot Password?",
+        "resetPassword": "Reset Password",
+        "sendResetLink": "Send Reset Link",
+        "backToSignIn": "Back to Sign In",
+        "resetLinkSent": "Password reset link sent to your email!",
+        "newPassword": "New Password",
+        "updatePassword": "Update Password",
+        "enterNewPassword": "Enter your new password below to secure your account.",
+        "minChars": "Min 6 characters",
+        "updateSuccess": "Password updated successfully!"
     },
     "dashboard": {
         "totalClusters": "Total Clusters",

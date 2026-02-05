@@ -3,10 +3,12 @@ import { supabase } from '../lib/supabase';
 import { motion } from 'framer-motion';
 import { Lock, ArrowRight, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 
 export const UpdatePassword = () => {
+    const { t } = useTranslation();
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -24,6 +26,7 @@ export const UpdatePassword = () => {
 
             if (error) throw error;
 
+            alert(t('auth.updateSuccess'));
             // Password updated successfully, redirect to dashboard
             navigate('/dashboard');
         } catch (err: unknown) {
@@ -50,8 +53,8 @@ export const UpdatePassword = () => {
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
 
                     <div className="text-center mb-8">
-                        <h1 className="text-2xl font-bold text-white">Update Password</h1>
-                        <p className="text-white/60 mt-2">Enter your new password below to secure your account.</p>
+                        <h1 className="text-2xl font-bold text-white">{t('auth.updatePassword')}</h1>
+                        <p className="text-white/60 mt-2">{t('auth.enterNewPassword')}</p>
                     </div>
 
                     {error && (
@@ -62,7 +65,7 @@ export const UpdatePassword = () => {
 
                     <form onSubmit={handleUpdatePassword} className="space-y-5">
                         <div className="space-y-1">
-                            <label className="text-sm font-medium text-white/80 ml-1">New Password</label>
+                            <label className="text-sm font-medium text-white/80 ml-1">{t('auth.newPassword')}</label>
                             <div className="relative group">
                                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-indigo-400 transition-colors" size={20} />
                                 <input
@@ -72,7 +75,7 @@ export const UpdatePassword = () => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="w-full bg-white/5 border border-white/10 rounded-xl px-10 py-3 outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all text-white placeholder-white/20"
-                                    placeholder="Min 6 characters"
+                                    placeholder={t('auth.minChars')}
                                 />
                             </div>
                         </div>
@@ -86,7 +89,7 @@ export const UpdatePassword = () => {
                                 <Loader2 className="animate-spin" size={20} />
                             ) : (
                                 <>
-                                    Update Password
+                                    {t('auth.updatePassword')}
                                     <ArrowRight size={18} />
                                 </>
                             )}
