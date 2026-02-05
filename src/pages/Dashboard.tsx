@@ -11,7 +11,7 @@ interface Cluster {
     title: string;
     description: string;
     created_at: string;
-    node_count?: number;
+    memo_count?: number;
 }
 
 export const Dashboard = () => {
@@ -37,7 +37,7 @@ export const Dashboard = () => {
 
             setClusters(data.map(d => ({
                 ...d,
-                node_count: d.cards?.[0]?.count ?? 0
+                memo_count: d.cards?.[0]?.count ?? 0
             })));
         } catch (error) {
             console.error('Error fetching clusters:', error);
@@ -133,7 +133,7 @@ export const Dashboard = () => {
                             <p className="text-white/60 text-sm mb-4 line-clamp-2">{cluster.description || 'No description'}</p>
 
                             <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
-                                <span className="text-sm text-white/50">{t('dashboard.nodesCount', { count: cluster.node_count || 0 })}</span>
+                                <span className="text-sm text-white/50">{t('dashboard.nodesCount', { count: cluster.memo_count || 0 })}</span>
                                 <Link
                                     to={`/deck/${cluster.id}`}
                                     className="px-4 py-2 bg-indigo-500/20 text-indigo-300 rounded-lg hover:bg-indigo-500 hover:text-white transition-all text-sm font-medium"

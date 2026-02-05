@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Plus, Trash2, GraduationCap, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Card {
     id: string;
@@ -19,6 +20,7 @@ interface Deck {
 }
 
 export const DeckDetail = () => {
+    const { t } = useTranslation();
     const { id } = useParams<{ id: string }>();
     const { user } = useAuth();
     const [deck, setDeck] = useState<Deck | null>(null);
@@ -81,7 +83,7 @@ export const DeckDetail = () => {
     };
 
     const handleDeleteCard = async (cardId: string) => {
-        if (!confirm('Are you sure you want to delete this card?')) return;
+        if (!confirm(t('deck.deleteConfirm'))) return;
         try {
             const { error } = await supabase.from('cards').delete().eq('id', cardId);
             if (error) throw error;
@@ -91,14 +93,14 @@ export const DeckDetail = () => {
         }
     };
 
-    if (loading) return <div className="text-center text-white/50 py-10">Loading...</div>;
-    if (!deck) return <div className="text-center text-white/50 py-10">Deck not found</div>;
+    if (loading) return <div className="text-center text-white/50 py-10">{t('app.loading')}</div>;
+    if (!deck) return <div className="text-center text-white/50 py-10">Cluster not found</div>;
 
     return (
         <div className="max-w-4xl mx-auto">
             <Link to="/" className="inline-flex items-center gap-2 text-white/50 hover:text-white mb-6 transition-colors">
                 <ArrowLeft size={20} />
-                Back to Dashboard
+                {t('deck.backToDashboard')}
             </Link>
 
             <div className="glass-panel p-6 mb-8 relative overflow-hidden">
@@ -113,23 +115,23 @@ export const DeckDetail = () => {
                             className="btn-primary px-6 py-3 rounded-xl flex items-center gap-2 font-bold shadow-xl shadow-indigo-500/20 whitespace-nowrap"
                         >
                             <GraduationCap size={24} />
-                            Start Review
+                            {t('deck.startReview')}
                         </Link>
                     </div>
                     <div className="mt-6 flex gap-4 text-sm text-white/40 font-mono">
-                        <span>{cards.length} Cards</span>
+                        <span>{t('deck.memosCount', { count: cards.length })}</span>
                     </div>
                 </div>
             </div>
 
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-white">Cards</h2>
+                <h2 className="text-xl font-bold text-white">{t('deck.memos')}</h2>
                 <button
                     onClick={() => setShowAddCard(true)}
                     className="btn-secondary px-4 py-2 rounded-lg flex items-center gap-2"
                 >
                     <Plus size={18} />
-                    Add Card
+                    {t('deck.addMemo')}
                 </button>
             </div>
 
@@ -144,11 +146,15 @@ export const DeckDetail = () => {
                     >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1 mr-4">
                             <div>
-                                <span className="text-xs text-indigo-300 font-bold uppercase tracking-wider block mb-1">Front</span>
+                                <span className="text-xs text-indigo-300 font-bold uppercase tracking-wider block mb-1">
+                                    {t('deck.front').split('(')[0]}
+                                </span>
                                 <p className="font-medium text-white/90">{card.front}</p>
                             </div>
                             <div>
-                                <span className="text-xs text-emerald-300 font-bold uppercase tracking-wider block mb-1">Back</span>
+                                <span className="text-xs text-emerald-300 font-bold uppercase tracking-wider block mb-1">
+                                    {t('deck.back').split('(')[0]}
+                                </span>
                                 <p className="text-white/70">{card.back}</p>
                             </div>
                         </div>
@@ -161,11 +167,11 @@ export const DeckDetail = () => {
                     </motion.div>
                 ))}
                 {cards.length === 0 && (
-                    <div className="text-center py-12 text-white/30 italic">No cards yet. Add some to start learning!</div>
+                    <div className="text-center py-12 text-white/30 italic">{t('deck.noMemos')}</div>
                 )}
             </div>
 
-            {/* Add Card Modal */}
+            {/* Add Memo Modal */}
             {showAddCard && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowAddCard(false)}>
                     <motion.div
@@ -174,27 +180,27 @@ export const DeckDetail = () => {
                         className="glass-panel w-full max-w-lg p-6"
                         onClick={e => e.stopPropagation()}
                     >
-                        <h2 className="text-xl font-bold mb-4 text-white">Add New Card</h2>
+                        <h2 className="text-xl font-bold mb-4 text-white">{t('deck.addMemoTitle')}</h2>
                         <form onSubmit={handleAddCard} className="space-y-4">
                             <div>
-                                <label className="block text-sm text-white/70 mb-1">Front (Question)</label>
+                                <label className="block text-sm text-white/70 mb-1">{t('deck.front')}</label>
                                 <textarea
                                     autoFocus
                                     required
                                     value={front}
                                     onChange={e => setFront(e.target.value)}
                                     className="glass-input w-full h-24 resize-none font-medium"
-                                    placeholder="Enter the question..."
+                                    placeholder={t('deck.frontPlaceholder')}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm text-white/70 mb-1">Back (Answer)</label>
+                                <label className="block text-sm text-white/70 mb-1">{t('deck.back')}</label>
                                 <textarea
                                     required
                                     value={back}
                                     onChange={e => setBack(e.target.value)}
                                     className="glass-input w-full h-24 resize-none"
-                                    placeholder="Enter the answer..."
+                                    placeholder={t('deck.backPlaceholder')}
                                 />
                             </div>
                             <div className="flex gap-3 justify-end pt-4">
@@ -203,7 +209,7 @@ export const DeckDetail = () => {
                                     onClick={() => setShowAddCard(false)}
                                     className="px-4 py-2 hover:bg-white/10 rounded-lg transition-colors text-white"
                                 >
-                                    Cancel
+                                    {t('deck.cancel')}
                                 </button>
                                 <button
                                     type="submit"
@@ -211,7 +217,7 @@ export const DeckDetail = () => {
                                     className="btn-primary px-6 py-2 rounded-lg flex items-center gap-2"
                                 >
                                     {adding && <Loader2 className="animate-spin" size={16} />}
-                                    Add Card
+                                    {t('deck.add')}
                                 </button>
                             </div>
                         </form>
