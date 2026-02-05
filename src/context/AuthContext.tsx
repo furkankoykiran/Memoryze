@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { Session, User } from '@supabase/supabase-js';
+import type { Session, User } from '@supabase/supabase-js';
 
 export interface Profile {
     id: string;
@@ -39,12 +39,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 .from('profiles')
                 .select('*')
                 .eq('id', userId)
-                .single();
+                .maybeSingle();
 
-            if (error && error.code !== 'PGRST116') {
+            if (error) {
                 console.error('Error fetching profile:', error);
             }
+
+            // If profile is missing but user exists, we could optionally create it here
+            // For now, just setting data is safe (it will be null if not found)
             setProfile(data);
+
+            if (!data && userId) {
+                // Optional: Attempt to create profile if missing (Self-healing)
+                // const { data: newProfile, error: createError } = await supabase.from('profiles').insert([{ id: userId }]).select().single();
+                // if (newProfile) setProfile(newProfile);
+                console.warn("Profile not found for user:", userId);
+            }
+
         } catch (error) {
             console.error('Error:', error);
         }

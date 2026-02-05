@@ -71,4 +71,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+*Make with ❤️ by [Furkan Köykıran](https://github.com/furkankoykiran)*
 *Memoryze © 2024*
