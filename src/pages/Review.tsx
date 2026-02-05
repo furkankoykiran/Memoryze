@@ -150,8 +150,11 @@ export const Review = () => {
           style={{ transformStyle: "preserve-3d" }}
         >
           {/* Front Face */}
-          <div className="absolute inset-0 flex items-center justify-center p-8 backface-hidden"
-            style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
+          <div className="absolute inset-0 flex items-center justify-center p-8 transition-opacity duration-300"
+            style={{
+              opacity: isFlipped ? 0 : 1,
+              pointerEvents: isFlipped ? 'none' : 'auto'
+            }}>
             <div>
               <span className="text-xs text-indigo-300 font-bold uppercase tracking-wider mb-4 block">{t('deck.review.question')}</span>
               <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.front}</h3>
@@ -160,11 +163,11 @@ export const Review = () => {
 
           {/* Back Face */}
           <div
-            className="absolute inset-0 flex items-center justify-center p-8 backface-hidden"
+            className="absolute inset-0 flex items-center justify-center p-8 transition-opacity duration-300"
             style={{
               transform: "rotateY(180deg)",
-              backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden'
+              opacity: isFlipped ? 1 : 0,
+              pointerEvents: isFlipped ? 'auto' : 'none'
             }}
           >
             <div>
