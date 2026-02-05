@@ -5,7 +5,7 @@
         "loading": "Loading..."
     },
     "auth": {
-        "welcomeBack": "Welcome back! Ready to sync?",
+        "welcomeBack": "Welcome back! Ready to start studying?",
         "welcomeJoin": "Join us and master your clusters",
         "signIn": "Sign In",
         "signUp": "Create Account",
@@ -21,19 +21,21 @@
         "yourClusters": "Your Clusters",
         "newCluster": "New Cluster",
         "noClustersTitle": "No clusters yet",
-        "noClustersDesc": "Create your first cluster to start syncing!",
+        "noClustersDesc": "Create your first cluster to start studying!",
         "createCluster": "Create Cluster",
-        "studyNow": "Sync Now",
+        "studyNow": "Start Study",
         "nodesCount": "{{count}} memos",
         "modalTitle": "Create New Cluster",
         "clusterTitle": "Title",
         "clusterDesc": "Description",
+        "clusterTitlePlaceholder": "e.g., Biology 101",
+        "clusterDescPlaceholder": "What is this cluster about?",
         "cancel": "Cancel",
         "create": "Create"
     },
     "deck": {
         "backToDashboard": "Back to Dashboard",
-        "startReview": "Start Sync",
+        "startReview": "Start Study",
         "memosCount": "{{count}} Memos",
         "memos": "Memos",
         "addMemo": "Add Memo",
@@ -41,7 +43,7 @@
         "back": "Back (Answer)",
         "frontPlaceholder": "Enter the question...",
         "backPlaceholder": "Enter the answer...",
-        "noMemos": "No memos yet. Add some to start syncing!",
+        "noMemos": "No memos yet. Add some to start studying!",
         "deleteConfirm": "Are you sure you want to delete this memo?",
         "addMemoTitle": "Add New Memo",
         "cancel": "Cancel",
@@ -54,7 +56,7 @@
         "login": "Login",
         "features": {
             "sync": {
-                "title": "Smart Sync",
+                "title": "Smart Scheduling",
                 "desc": "Optimize your review schedule using advanced algorithms."
             },
             "clusters": {
@@ -73,7 +75,8 @@
     "nav": {
         "dashboard": "Dashboard",
         "signOut": "Sign Out",
-        "profile": "Profile"
+        "profile": "Profile",
+        "home": "Home"
     },
     "profile": {
         "firstName": "First Name",

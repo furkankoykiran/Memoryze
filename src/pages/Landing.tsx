@@ -3,6 +3,7 @@ import { BookOpen, Zap, Layers } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 export const Landing = () => {
     const { t } = useTranslation();
@@ -35,13 +36,13 @@ export const Landing = () => {
                         transition={{ delay: 0.2 }}
                         className="flex flex-col sm:flex-row gap-4 justify-center"
                     >
-                        <a
-                            href="/auth"
+                        <Link
+                            to="/auth"
                             className="btn-primary text-lg px-8 py-4 rounded-2xl flex items-center justify-center gap-2"
                         >
                             <Zap size={20} />
                             {t('landing.getStarted')}
-                        </a>
+                        </Link>
                     </motion.div>
                 </div>
 

@@ -130,12 +130,12 @@ export const Review = () => {
         <motion.div
           className="glass-panel p-10 min-h-[350px] flex flex-col items-center justify-center text-center cursor-pointer shadow-2xl relative z-10"
           onClick={() => !isFlipped && setIsFlipped(true)}
-          initial={{ rotateX: 0 }}
-          animate={{ rotateX: isFlipped ? 180 : 0 }}
+          initial={{ rotateY: 0 }}
+          animate={{ rotateY: isFlipped ? 180 : 0 }}
           transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
           style={{ transformStyle: "preserve-3d" }}
         >
-          <div className="absolute inset-0 flex items-center justify-center backface-hidden p-8" style={{ backfaceVisibility: 'hidden' }}>
+          <div className="absolute inset-0 flex items-center justify-center p-8" style={{ backfaceVisibility: 'hidden' }}>
             <div>
               <span className="text-xs text-indigo-300 font-bold uppercase tracking-wider mb-4 block">Question</span>
               <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.front}</h3>
@@ -143,8 +143,8 @@ export const Review = () => {
           </div>
 
           <div
-            className="absolute inset-0 flex items-center justify-center backface-hidden p-8"
-            style={{ transform: "rotateX(180deg)", backfaceVisibility: 'hidden' }}
+            className="absolute inset-0 flex items-center justify-center p-8"
+            style={{ transform: "rotateY(180deg)", backfaceVisibility: 'hidden' }}
           >
             <div>
               <span className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-4 block">Answer</span>

@@ -1,4 +1,4 @@
-# Memoryze 🧠
+# <img src="public/logo.png" width="48" height="48" style="vertical-align: middle; margin-right: 10px;" /> Memoryze
 
 > **Sync your knowledge, retain your future.**
 

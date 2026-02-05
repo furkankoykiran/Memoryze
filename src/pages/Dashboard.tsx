@@ -164,7 +164,7 @@ export const Dashboard = () => {
                                     value={newClusterTitle}
                                     onChange={e => setNewClusterTitle(e.target.value)}
                                     className="glass-input w-full"
-                                    placeholder="e.g., Biology 101"
+                                    placeholder={t('dashboard.clusterTitlePlaceholder')}
                                 />
                             </div>
                             <div>
@@ -173,7 +173,7 @@ export const Dashboard = () => {
                                     value={newClusterDesc}
                                     onChange={e => setNewClusterDesc(e.target.value)}
                                     className="glass-input w-full h-24 resize-none"
-                                    placeholder="What is this cluster about?"
+                                    placeholder={t('dashboard.clusterDescPlaceholder')}
                                 />
                             </div>
                             <div className="flex gap-3 justify-end pt-4">

@@ -16,6 +16,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         { icon: LayoutDashboard, label: t('nav.dashboard'), path: '/dashboard' },
     ];
 
+    const isMobile = window.innerWidth < 1024; // Simple check, or rely on CSS for desktop reset
+
     const toggleLanguage = () => {
         const newLang = i18n.language === 'en' ? 'tr' : 'en';
         i18n.changeLanguage(newLang);
@@ -40,20 +42,14 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             )}
 
             {/* Sidebar */}
-            <motion.aside
-                initial={false}
-                animate={{ x: isOpen ? 0 : '-100%' }}
-                // Desktop: always 0 (reset transform via css using lg:transform-none if needed
-                style={{ x: undefined }}
+            <aside
                 className={clsx(
-                    "fixed top-0 bottom-0 left-0 z-40 w-64 glass-panel m-0 rounded-none lg:m-4 lg:rounded-2xl flex flex-col p-6 transition-transform duration-300 lg:translate-x-0",
-                    !isOpen && "-translate-x-full lg:translate-x-0"
+                    "fixed top-0 bottom-0 left-0 z-40 w-64 glass-panel m-0 rounded-none lg:m-4 lg:rounded-2xl flex flex-col p-6 transition-transform duration-300",
+                    isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
                 )}
             >
                 <div className="flex items-center gap-3 mb-10">
-                    <div className="p-2 bg-indigo-500 rounded-lg shadow-lg shadow-indigo-500/30">
-                        <Book size={24} className="text-white" />
-                    </div>
+                    <img src="/logo.png" alt="Memoryze" className="w-10 h-10" />
                     <div>
                         <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
                             {t('app.title')}
@@ -62,6 +58,15 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 </div>
 
                 <nav className="flex-1 space-y-2">
+                    <Link
+                        to="/"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-white/70 hover:bg-white/10 hover:text-white"
+                    >
+                        <Book size={20} />
+                        {t('nav.home')}
+                    </Link>
+
                     {navItems.map((item) => (
                         <Link
                             key={item.path}
@@ -109,7 +114,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                         {t('nav.signOut')}
                     </button>
                 </div>
-            </motion.aside>
+            </aside>
 
             {/* Main Content */}
             <main className="flex-1 p-4 lg:p-8 lg:ml-72 overflow-x-hidden min-h-screen">

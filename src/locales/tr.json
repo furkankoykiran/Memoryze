@@ -5,7 +5,7 @@
         "loading": "Yükleniyor..."
     },
     "auth": {
-        "welcomeBack": "Tekrar hoşgeldin! Senkronize olmaya hazır mısın?",
+        "welcomeBack": "Tekrar hoşgeldin! Çalışmaya hazır mısın?",
         "welcomeJoin": "Bize katıl ve kümelerini yönet",
         "signIn": "Giriş Yap",
         "signUp": "Hesap Oluştur",
@@ -21,19 +21,21 @@
         "yourClusters": "Kümelerin",
         "newCluster": "Yeni Küme",
         "noClustersTitle": "Henüz küme yok",
-        "noClustersDesc": "Senkronizasyona başlamak için ilk kümeni oluştur!",
+        "noClustersDesc": "Çalışmaya başlamak için ilk kümeni oluştur!",
         "createCluster": "Küme Oluştur",
-        "studyNow": "Senkronize Et",
+        "studyNow": "Çalışmaya Başla",
         "nodesCount": "{{count}} memo",
         "modalTitle": "Yeni Küme Oluştur",
         "clusterTitle": "Başlık",
         "clusterDesc": "Açıklama",
+        "clusterTitlePlaceholder": "ör., İngilizce Kelimeler",
+        "clusterDescPlaceholder": "Bu küme ne hakkında?",
         "cancel": "İptal",
         "create": "Oluştur"
     },
     "deck": {
         "backToDashboard": "Panele Dön",
-        "startReview": "Senkronizasyonu Başlat",
+        "startReview": "Çalışmayı Başlat",
         "memosCount": "{{count}} Memo",
         "memos": "Memolar",
         "addMemo": "Memo Ekle",
@@ -54,7 +56,7 @@
         "login": "Giriş Yap",
         "features": {
             "sync": {
-                "title": "Akıllı Senkronizasyon",
+                "title": "Akıllı Programlama",
                 "desc": "Gelişmiş algoritmalarla tekrar programını optimize et."
             },
             "clusters": {
@@ -73,7 +75,8 @@
     "nav": {
         "dashboard": "Panel",
         "signOut": "Çıkış Yap",
-        "profile": "Profil"
+        "profile": "Profil",
+        "home": "Ana Sayfa"
     },
     "profile": {
         "firstName": "Ad",

@@ -41,15 +41,23 @@ export const Header = () => {
         <header className="fixed top-0 left-0 right-0 z-50 glass-panel rounded-none border-t-0 border-x-0 border-b border-white/10 px-6 py-4">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 <Link to="/" className="flex items-center gap-2 group">
-                    <div className="p-2 bg-indigo-500 rounded-lg shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform">
-                        <BookOpen size={24} className="text-white" />
-                    </div>
+                    <img src="/logo.png" alt="Memoryze Logo" className="w-10 h-10 group-hover:scale-105 transition-transform" />
                     <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
                         Memoryze
                     </span>
                 </Link>
 
                 <div className="flex items-center gap-4">
+                    {/* Dashboard Link for Logged In Users */}
+                    {session && (
+                        <Link
+                            to="/dashboard"
+                            className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors text-sm font-medium"
+                        >
+                            {t('nav.dashboard')}
+                        </Link>
+                    )}
+
                     {/* User Profile Display */}
                     {session && profile && (
                         <div className="hidden md:flex items-center gap-2 text-white/80 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
