@@ -72,6 +72,17 @@
     },
     "nav": {
         "dashboard": "Dashboard",
-        "signOut": "Sign Out"
+        "signOut": "Sign Out",
+        "profile": "Profile"
+    },
+    "profile": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "welcome": "Welcome, {{name}}"
+    },
+    "language": {
+        "select": "Select Language",
+        "en": "English",
+        "tr": "Türkçe"
     }
 }

@@ -1,49 +1,15 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BookOpen, Zap, Layers, Globe } from 'lucide-react';
+import { BookOpen, Zap, Layers } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 
 export const Landing = () => {
-    const { t, i18n } = useTranslation();
-
-    const toggleLanguage = () => {
-        const newLang = i18n.language === 'en' ? 'tr' : 'en';
-        i18n.changeLanguage(newLang);
-    };
+    const { t } = useTranslation();
 
     return (
         <div className="min-h-screen bg-slate-900 text-white flex flex-col">
-            {/* Header */}
-            <header className="fixed top-0 left-0 right-0 z-50 glass-panel rounded-none border-t-0 border-x-0 border-b border-white/10 px-6 py-4">
-                <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="p-2 bg-indigo-500 rounded-lg shadow-lg shadow-indigo-500/30">
-                            <BookOpen size={24} className="text-white" />
-                        </div>
-                        <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
-                            Memoryze
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={toggleLanguage}
-                            className="p-2 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors"
-                            aria-label="Toggle Language"
-                        >
-                            <Globe size={20} />
-                        </button>
-                        <Link to="/auth" className="text-sm font-medium hover:text-indigo-400 transition-colors">
-                            {t('landing.login')}
-                        </Link>
-                        <Link
-                            to="/auth"
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all shadow-lg shadow-indigo-500/25"
-                        >
-                            {t('landing.getStarted')}
-                        </Link>
-                    </div>
-                </div>
-            </header>
+            <Header />
 
             {/* Hero Section */}
             <main className="flex-1 pt-32 pb-20 px-4">
@@ -69,13 +35,13 @@ export const Landing = () => {
                         transition={{ delay: 0.2 }}
                         className="flex flex-col sm:flex-row gap-4 justify-center"
                     >
-                        <Link
-                            to="/auth"
+                        <a
+                            href="/auth"
                             className="btn-primary text-lg px-8 py-4 rounded-2xl flex items-center justify-center gap-2"
                         >
                             <Zap size={20} />
                             {t('landing.getStarted')}
-                        </Link>
+                        </a>
                     </motion.div>
                 </div>
 
@@ -102,10 +68,7 @@ export const Landing = () => {
                 </div>
             </main>
 
-            {/* Footer */}
-            <footer className="border-t border-white/10 py-8 text-center text-white/40 text-sm">
-                <p>{t('landing.footer.rights')}</p>
-            </footer>
+            <Footer />
         </div>
     );
 };

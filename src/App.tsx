@@ -6,8 +6,18 @@ import { Dashboard } from './pages/Dashboard';
 import { DeckDetail } from './pages/DeckDetail';
 import { Review } from './pages/Review';
 import { Landing } from './pages/Landing';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 
-// Protected Route Component
+// Layout Wrapper for Pages that need Header/Footer
+// Although Landing uses them directly, other protected pages use Layout
+// But user requested "header and footer must be on all pages"
+// So we can wrap Auth in a layout that only has header/footer content but centers the auth form?
+// NO, the user says "header portion should have name/surname etc".
+// Let's create a PublicLayout for Auth if needed, or just use Header/Footer in Auth page manually to keep the center alignment.
+// BUT, the Layout component I just created handles basic layout.
+// Let's try to use Layout for everything.
+
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { session, loading } = useAuth();
 
@@ -20,7 +30,18 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <Layout>{children}</Layout>;
 };
 
-// Public Route Component (redirects to dashboard if logged in)
+const PublicLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="min-h-screen bg-slate-900 text-white flex flex-col pt-20">
+      <Header />
+      <div className="flex-1 flex items-center justify-center px-4">
+        {children}
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { session, loading } = useAuth();
 
@@ -30,7 +51,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/dashboard" replace />;
   }
 
-  return <>{children}</>;
+  return <PublicLayout>{children}</PublicLayout>;
 };
 
 function App() {
@@ -38,10 +59,10 @@ function App() {
     <AuthProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
-          {/* Landing Page (Public) */}
+          {/* Landing Page (Has its own layout structure in Landing.tsx) */}
           <Route path="/" element={<Landing />} />
 
-          {/* Auth Page (Public - Restricted if logged in) */}
+          {/* Auth Page */}
           <Route path="/auth" element={
             <PublicRoute>
               <Auth />

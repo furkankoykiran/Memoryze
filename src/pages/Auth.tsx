@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 export const Auth = () => {
     const { t } = useTranslation();
     const [isLogin, setIsLogin] = useState(true);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -28,7 +30,7 @@ export const Auth = () => {
                 if (error) throw error;
                 navigate('/dashboard');
             } else {
-                const { error } = await supabase.auth.signUp({
+                const { data, error } = await supabase.auth.signUp({
                     email,
                     password,
                     options: {
@@ -36,6 +38,23 @@ export const Auth = () => {
                     }
                 });
                 if (error) throw error;
+
+                if (data.user) {
+                    const { error: profileError } = await supabase
+                        .from('profiles')
+                        .insert([
+                            {
+                                id: data.user.id,
+                                first_name: firstName,
+                                last_name: lastName
+                            }
+                        ]);
+
+                    // If there's a profile error, we log it but don't stop the flow
+                    // In a real app we might want to handle this more gracefully
+                    if (profileError) console.error('Error creating profile:', profileError);
+                }
+
                 alert(t('auth.checkEmail'));
             }
         } catch (err: unknown) {
@@ -75,6 +94,32 @@ export const Auth = () => {
                 )}
 
                 <form onSubmit={handleAuth} className="space-y-5">
+                    {!isLogin && (
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-1">
+                                <label className="text-sm font-medium text-white/80 ml-1">{t('profile.firstName')}</label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all text-white placeholder-white/20"
+                                    placeholder="John"
+                                />
+                            </div>
+                            <div className="space-y-1">
+                                <label className="text-sm font-medium text-white/80 ml-1">{t('profile.lastName')}</label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all text-white placeholder-white/20"
+                                    placeholder="Doe"
+                                />
+                            </div>
+                        </div>
+                    )}
                     <div className="space-y-1">
                         <label className="text-sm font-medium text-white/80 ml-1">{t('auth.email')}</label>
                         <div className="relative group">

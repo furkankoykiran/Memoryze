@@ -72,6 +72,17 @@
     },
     "nav": {
         "dashboard": "Panel",
-        "signOut": "Çıkış Yap"
+        "signOut": "Çıkış Yap",
+        "profile": "Profil"
+    },
+    "profile": {
+        "firstName": "Ad",
+        "lastName": "Soyad",
+        "welcome": "Hoş geldin, {{name}}"
+    },
+    "language": {
+        "select": "Dil Seçiniz",
+        "en": "English",
+        "tr": "Türkçe"
     }
 }
