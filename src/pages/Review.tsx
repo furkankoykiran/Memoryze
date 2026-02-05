@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useAnimation } from 'framer-motion';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 import { calculateSM2 } from '../lib/sm2';
 import { useTranslation } from 'react-i18next';
@@ -29,9 +29,25 @@ export const Review = () => {
   const [sessionComplete, setSessionComplete] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
 
+  // Animation controls
+  const controls = useAnimation();
+  const rotateY = useMotionValue(0);
+  // Interpolate opacity based on rotation angle to ensure clean swap
+  // Front is visible from 0 to 90deg. Back is visible from 90 to 180deg.
+  const frontOpacity = useTransform(rotateY, [89, 90], [1, 0]);
+  const backOpacity = useTransform(rotateY, [89, 90], [0, 1]);
+
   useEffect(() => {
     if (id && user) fetchReviews();
   }, [id, user]);
+
+  useEffect(() => {
+    // Animate rotation based on flip state
+    controls.start({
+      rotateY: isFlipped ? 180 : 0,
+      transition: { duration: 0.6, type: "spring", stiffness: 260, damping: 20 }
+    });
+  }, [isFlipped, controls]);
 
   const fetchReviews = async () => {
     try {
@@ -56,13 +72,8 @@ export const Review = () => {
   const handleGrade = async (grade: number) => {
     const card = cards[currentCardIndex];
 
-    // Only update SM2 algorithm if the grade is passing (Good 4 or Easy 5)
-    // If we fail (Again 0 or Hard 3), we don't save the progress yet, we just repeat it locally.
-    // Or strictly speaking, SM2 handles failures by resetting intervals. 
-    // But for this "Session" logic, the user wants to see it AGAIN in this session until passed.
-
     if (grade >= 4) {
-      // Passing grade: Update DB
+      // Passing grade
       const result = calculateSM2({
         q: grade,
         repetition: card.repetition,
@@ -70,7 +81,6 @@ export const Review = () => {
         interval: card.interval
       });
 
-      // Backend update
       supabase.from('cards').update({
         next_review: result.nextReviewDate.toISOString(),
         interval: result.interval,
@@ -82,11 +92,7 @@ export const Review = () => {
 
       setCompletedCount(prev => prev + 1);
     } else {
-      // Failing grade (Again/Hard):
-      // 1. We should penalize the card in DB immediately (reset interval) so it shows up tomorrow properly?
-      //    Ideally yes, SM2 says if q<3 start over. 
-      //    Let's handle the DB update for failure too, to ensure future scheduling is correct.
-
+      // Failing grade: penalize in DB nicely, and re-queue locally
       const result = calculateSM2({
         q: grade,
         repetition: card.repetition,
@@ -103,15 +109,16 @@ export const Review = () => {
         if (error) console.error("Update failed", error);
       });
 
-      // 2. Re-queue for THIS session logic
-      // Push a copy to the end of the list so we see it again
       setCards(prev => [...prev, card]);
     }
 
-    // Reset flip
     setIsFlipped(false);
 
-    // Move to next card
+    // Wait slightly for flip back before moving? No, feels snappy to just move.
+    // Ideally we wait for flip to reset (instant) or fade out.
+    // For now, index change triggers re-render with new content.
+
+    // Slight delay to allow flip state to reset visually if needed, but standard Anki app style is instant.
     const nextIndex = currentCardIndex + 1;
     if (nextIndex >= cards.length) {
       setSessionComplete(true);
@@ -160,7 +167,7 @@ export const Review = () => {
           <ArrowLeft />
         </button>
         <div className="text-white/40 text-sm font-mono">
-          Card {currentCardIndex + 1} / {cards.length}
+          {t('deck.review.progress', { current: currentCardIndex + 1, total: cards.length })}
         </div>
         <div className="w-6" />
       </div>
@@ -170,32 +177,30 @@ export const Review = () => {
           className="glass-panel min-h-[350px] relative z-10 cursor-pointer shadow-2xl"
           onClick={() => !isFlipped && setIsFlipped(true)}
           initial={{ rotateY: 0 }}
-          animate={{ rotateY: isFlipped ? 180 : 0 }}
-          transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
+          animate={controls}
           style={{
             transformStyle: "preserve-3d",
-            position: 'relative',
-            width: '100%',
-            height: '100%'
+            rotateY: rotateY
           }}
         >
           {/* FRONT FACE (Question) */}
-          <div
+          <motion.div
             className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center"
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
-              backgroundColor: 'rgba(30, 41, 59, 0.95)', // Ensure background is opaque
-              borderRadius: '1.5rem', // Match glass-panel
-              border: '1px solid rgba(255, 255, 255, 0.1)'
+              backgroundColor: 'rgba(30, 41, 59, 0.95)',
+              borderRadius: '1.5rem',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              opacity: frontOpacity
             }}
           >
             <span className="text-xs text-indigo-300 font-bold uppercase tracking-wider mb-4 block">{t('deck.review.question')}</span>
             <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.front}</h3>
-          </div>
+          </motion.div>
 
           {/* BACK FACE (Answer) */}
-          <div
+          <motion.div
             className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center"
             style={{
               backfaceVisibility: 'hidden',
@@ -203,12 +208,13 @@ export const Review = () => {
               transform: 'rotateY(180deg)',
               backgroundColor: 'rgba(30, 41, 59, 0.95)',
               borderRadius: '1.5rem',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              opacity: backOpacity
             }}
           >
             <span className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-4 block">{t('deck.review.answer')}</span>
             <h3 className="text-2xl font-medium leading-relaxed text-white">{currentCard.back}</h3>
-          </div>
+          </motion.div>
         </motion.div>
 
         <div className="mt-8 text-center h-24">
