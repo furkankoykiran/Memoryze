@@ -2,13 +2,16 @@
 
 > **Sync your knowledge, retain your future.**
 
+**Live app: [furkankoykiran.com.tr/Memoryze](https://furkankoykiran.com.tr/Memoryze/)**
+
 Memoryze is a modern, spaced-repetition based learning application designed to help you optimize your study sessions and maximize retention. Built with a focus on simplicity, performance, and user experience.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/React-18-blue)
-![Vite](https://img.shields.io/badge/Vite-5-purple)
+![React](https://img.shields.io/badge/React-19-blue)
+![Vite](https://img.shields.io/badge/Vite-7-purple)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3-cyan)
 ![Supabase](https://img.shields.io/badge/Supabase-Auth%20%26%20DB-green)
+[![CI](https://github.com/furkankoykiran/Memoryze/actions/workflows/ci.yml/badge.svg)](https://github.com/furkankoykiran/Memoryze/actions/workflows/ci.yml)
 
 ---
 
@@ -31,6 +34,19 @@ Memoryze is a modern, spaced-repetition based learning application designed to h
 - **Internationalization**: [i18next](https://www.i18next.com/)
 - **Routing**: [React Router](https://reactrouter.com/)
 - **Icons**: [Lucide React](https://lucide.dev/)
+
+## 🔍 SEO, AI discovery and build
+
+- Turkish/English interface; `document.documentElement.lang` follows the active language.
+- Canonical URL, Open Graph/Twitter cards and a generated 1200×630 `og-image.png`.
+- `WebApplication` + `FAQPage` JSON-LD with author, licence and repository links.
+- `robots.txt`, `sitemap.xml`, `llms.txt`, `ai.txt`, `.well-known/security.txt` and a web manifest in `public/`.
+- `npm run build` runs `vite build`, then `scripts/postbuild.js` (writes `404.html` and `.nojekyll`) and `scripts/verify-build.js`, which fails when metadata, discovery files or hashed assets are missing.
+- Routes other than the landing page are code-split, so the public page loads only the landing chunk.
+
+The Supabase URL and anon key in `.env` are public by design (`VITE_` variables are
+embedded in the client bundle); row-level security in Supabase is what protects user
+data. Move them to repository secrets if you prefer not to commit `.env`.
 
 ## 📦 Installation
 

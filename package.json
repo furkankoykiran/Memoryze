@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/postbuild.js && node scripts/verify-build.js",
+    "verify": "node scripts/verify-build.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

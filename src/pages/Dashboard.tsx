@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
@@ -62,7 +62,7 @@ export const Dashboard = () => {
         }
     };
 
-    const fetchClusters = async () => {
+    const fetchClusters = useCallback(async () => {
         if (!user) return;
         try {
             // Note: We are still using 'decks' table for now to avoid database migration complexity
@@ -83,11 +83,11 @@ export const Dashboard = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [user]);
 
     useEffect(() => {
         fetchClusters();
-    }, [user]);
+    }, [fetchClusters]);
 
     const handleCreateCluster = async (e: React.FormEvent) => {
         e.preventDefault();

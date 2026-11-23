@@ -21,4 +21,12 @@ i18n
         },
     });
 
+// Keep the document language in sync with the active interface language so
+// screen readers and search engines see the language that is actually shown.
+i18n.on('languageChanged', (lng) => {
+    if (typeof document !== 'undefined') {
+        document.documentElement.lang = lng.startsWith('tr') ? 'tr' : 'en';
+    }
+});
+
 export default i18n;
