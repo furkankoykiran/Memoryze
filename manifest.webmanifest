@@ -1,0 +1,25 @@
+{
+  "name": "Memoryze — Sync Your Knowledge",
+  "short_name": "Memoryze",
+  "description": "Spaced-repetition learning app: turn notes into atomic flashcards and review them on a SuperMemo 2 schedule.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "favicon-64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
