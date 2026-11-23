@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Book, LayoutDashboard, LogOut, Menu, X, Globe } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { clsx } from 'clsx';
 import { useTranslation } from 'react-i18next';
 
@@ -15,8 +14,6 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     const navItems = [
         { icon: LayoutDashboard, label: t('nav.dashboard'), path: '/dashboard' },
     ];
-
-    const isMobile = window.innerWidth < 1024; // Simple check, or rely on CSS for desktop reset
 
     const toggleLanguage = () => {
         const newLang = i18n.language === 'en' ? 'tr' : 'en';

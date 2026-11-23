@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
@@ -31,11 +31,7 @@ export const DeckDetail = () => {
     const [back, setBack] = useState('');
     const [adding, setAdding] = useState(false);
 
-    useEffect(() => {
-        fetchData();
-    }, [id, user]);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         if (!id || !user) return;
         try {
             const { data: deckData, error: deckError } = await supabase.from('decks').select('*').eq('id', id).single();
@@ -51,7 +47,13 @@ export const DeckDetail = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [id, user]);
+
+    useEffect(() => {
+        // Data fetching is the purpose of this effect; the state updates happen asynchronously.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        fetchData();
+    }, [fetchData]);
 
     const handleAddCard = async (e: React.FormEvent) => {
         e.preventDefault();

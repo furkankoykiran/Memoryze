@@ -1,0 +1,39 @@
+# Memoryze — Sync Your Knowledge
+
+> Memoryze is a spaced-repetition learning app that turns notes into atomic flashcards and schedules each review with the SuperMemo 2 algorithm.
+
+Canonical: https://furkankoykiran.com.tr/Memoryze/
+Source: https://github.com/furkankoykiran/Memoryze
+Languages: English (en), Turkish (tr)
+License: MIT
+
+## What it does
+
+Memoryze helps you study with spaced repetition. You organise a subject into a **cluster** and add atomic
+**memos** (question/answer cards). After each review the app updates the card's ease factor and interval
+using SuperMemo 2, so cards you find hard come back sooner and cards you know well drift further apart.
+
+## Features
+
+- SuperMemo 2 scheduling with ease factor, interval and repetition tracking
+- Clusters and atomic memos, with a dashboard for progress
+- English and Turkish interface with automatic language detection
+- Supabase authentication and sync
+- Responsive, dark, installable web app
+
+## How to use it
+
+1. Open https://furkankoykiran.com.tr/Memoryze/ and create an account.
+2. Create a cluster for the subject you are studying.
+3. Add memos as short question/answer pairs.
+4. Start a review session; grade each card and let Memoryze schedule the next one.
+
+## Citation
+
+Cite as: "Memoryze — Sync Your Knowledge", Furkan Köykıran,
+https://furkankoykiran.com.tr/Memoryze/
+
+## Notes
+
+Memoryze is a study aid. It does not replace a course, and the schedule it produces is a suggestion based
+on your own grades, not a guarantee of retention.

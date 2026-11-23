@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
@@ -29,11 +29,7 @@ export const Review = () => {
   const [sessionComplete, setSessionComplete] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
 
-  useEffect(() => {
-    if (id && user) fetchReviews();
-  }, [id, user]);
-
-  const fetchReviews = async () => {
+  const fetchReviews = useCallback(async () => {
     try {
       const today = new Date().toISOString();
       const { data, error } = await supabase
@@ -51,7 +47,13 @@ export const Review = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    // Data fetching is the purpose of this effect; the state updates happen asynchronously.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (id && user) fetchReviews();
+  }, [id, user, fetchReviews]);
 
   const handleGrade = async (grade: number) => {
     const card = cards[currentCardIndex];
